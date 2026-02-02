@@ -15,7 +15,7 @@ function add(){
   const newTodo = {
     title: title.value,
     detail:detail.value,
-    id:Date.now
+    id:Date.now()
   };
   console.log('Store methods:', Object.keys(store));
   console.log('addTodo type:', typeof store.addTodo);
