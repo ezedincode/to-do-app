@@ -49,7 +49,11 @@ const item = computed(() =>
   <div class="flex flex-col items-center" v-if ="todo">
     <input v-model="todo.title" class="h-12 w-3/4 border-b border-black focus:outline-none" type="text" placeholder="Title">
     <input v-model="todo.detail" class="h-12 w-3/4 border-b border-black focus:outline-none" type="text" placeholder="Detail">
-    <button class="h-14 w-3/4 text-white text-[20px] font-serif bg-[#9395d3] mt-[50px] rounded-[10px]" @click="edit">ADD</button>
+    <div class="flex w-3/4 gap-6">
+      <button class="h-14 w-3/4 text-white text-[20px] font-serif bg-[#9395d3] mt-[50px] rounded-[10px]" @click="edit">Edit</button>
+      <button class="h-14 w-3/4 text-white text-[20px] font-serif bg-[#9395d3] mt-[50px] rounded-[10px]" @click="routeTOhome">cancel</button>  
+    </div>
+    
   </div>
     
   
