@@ -35,7 +35,7 @@ function routeTOhome (){
     router.push('/');
 }
 const item = computed(() => 
-  store.items.find(item => item.id === Number(route.params.id))
+  store.items.find(todo => todo.id === Number(route.params.id))
 )
 
 </script>
