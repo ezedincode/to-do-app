@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import { ref,onMounted, watch, onBeforeMount} from 'vue';
+import { ref,onMounted, watch, onBeforeMount, onBeforeUnmount} from 'vue';
 import { useTodoStore } from '@/stores/todo';
 const emit = defineEmits(['addTodo'])
 const router = useRouter();
@@ -17,15 +17,21 @@ function edit(id){
 }
  onMounted(() => {
   const stored = localStorage.getItem('todo');
+  console.log(stored + 'as');
   if(stored){
-    store.addTodo = JSON.parse(stored);
+    store.todos = JSON.parse(stored);
   }
  }
 )
-onBeforeMount(() =>{
-    localStorage.clear();
-    localStorage.setItem('todo' ,JSON.stringify(store));
-})
+watch(
+  () => store.todos,
+  (todos) => {
+    console.log('WATCH FIRED:', todos);
+    localStorage.setItem('todos', JSON.stringify(todos));
+  },
+  { deep: true }
+);
+
 function completed(id){
   const completedTOdo = store.todos.find(item => item.id === Number(id));
   if(!completedTOdo){
@@ -38,6 +44,9 @@ function completed(id){
   };
   store.updateTodo(updateTodo);
   console.log(updateTodo.isCompleted)
+}
+function complete () {
+  router.push('/complete')
 }
 
 </script>
@@ -78,7 +87,7 @@ function completed(id){
         <p  class="text-[15px] text-[#8f8b8b]">All</p>
       </div>
     <div class="flex flex-col items-end">
-      <img class="w-5 h-5 mr-5 mt-1" src="\src\resource\check-mark.png" alt="">
+      <img @click="complete" class="w-5 h-5 mr-5 mt-1" src="\src\resource\check-mark.png" alt="">
       <p class="text-[15px] text-[#8f8b8b]">complete</p>
     </div>
     </div>
