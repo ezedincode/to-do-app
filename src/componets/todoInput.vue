@@ -2,6 +2,8 @@
 import { defineEmits ,ref,computed} from 'vue';
 import {useRouter} from 'vue-router';
 import { useTodoStore } from '@/stores/todo';
+import { useToast } from 'vue-toastification';
+const toast = useToast();
 const emit = defineEmits(['toDoAdd']);
 const title = ref("");
 const detail=ref("");
@@ -9,7 +11,10 @@ const router = useRouter();
 const store = useTodoStore();
 function add(){
     if (!title.value.trim() || !detail.value.trim()) {
-    alert('Fill both fields');
+    toast.error('Please fill both fields',{
+    timeout: 2000,
+    icon:false
+  })
     return;
   }
   const newTodo = {
@@ -21,6 +26,8 @@ function add(){
   console.log('Store methods:', Object.keys(store));
   console.log('addTodo type:', typeof store.addTodo);
     store.todos.push(newTodo);
+  
+  toast.success('Task Added Successfully!')
 };
 function route (){
     router.push('/');

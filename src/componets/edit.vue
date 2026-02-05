@@ -2,6 +2,8 @@
 import { defineEmits ,ref,computed,onMounted} from 'vue';
 import {useRouter,useRoute} from 'vue-router';
 import { useTodoStore } from '@/stores/todo';
+import { useToast } from 'vue-toastification';
+const toast = useToast();
 const emit = defineEmits(['toDoAdd']);
 const todo = ref(null);
 const detail=ref("");
@@ -24,10 +26,13 @@ function edit(){
 const title = todo.value.title?.trim();
 const detail = todo.value.detail?.trim();
 if(!title || !detail){
-  alert('Please fill in both Title and Detail.');
+  toast.error('Please fill both fields',{
+    timeout: 2000,
+    icon:false
+  })
   return;
 }
-
+toast.success('Task Edited Successfully!')
   store.updateTodo(todo.value);
   router.push('/');
 };

@@ -39,8 +39,8 @@ function complete () {
   <TaskList class="h-4/5 flex-1 overflow-y-auto"
   :list-type="type"
   ></TaskList>
-    <button class="absolute opacity-50 rounded-full w-20 h-20 bg-[#9395d3] left-3/4 top-3/4"
-    @click=" sendtodo">
+    <button class="absolute  opacity-50 flex items-center justify-center rounded-full w-20 h-20 bg-[#9395d3] left-3/4 top-3/4"
+    @click=" sendtodo"> <img src="\src\resource\icons8-plus-24.png" alt="">
 </button>
   <footer class="h-[50px] w-1vw bg-white ">
     <div class="flex  items-end justify-around mr-3">

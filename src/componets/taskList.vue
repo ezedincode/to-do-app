@@ -2,7 +2,8 @@
 import { computed, onMounted } from 'vue';
 import { useTodoStore } from '@/stores/todo';
 import {useRouter} from 'vue-router';
-
+import { useToast } from 'vue-toastification';
+const toast = useToast();
 const router = useRouter();
 const stored = useTodoStore();
 onMounted (() => {
@@ -20,7 +21,10 @@ const store = computed (() => {
 function completed(id){
   const completedTOdo = stored.todos.find(item => item.id === Number(id));
   if(!completedTOdo){
-    alert('todo not found');
+    toast.error('Task Not Found!',{
+    timeout: 2000,
+    icon:false
+  })
     return
   }
   const updateTodo = {
@@ -28,10 +32,14 @@ function completed(id){
     isCompleted: true
   };
   stored.updateTodo(updateTodo);
-  console.log(updateTodo.isCompleted)
+  toast.success('Task completed')
 }
 function deleteTodo (id){
   stored.todos = stored.todos.filter(t => t.id !== id);
+   toast.error('Task Deleted',{
+    timeout: 2000,
+    icon:false
+  })
 }
 function edit(id){
   router.push(`/edit/${id}`);
