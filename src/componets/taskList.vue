@@ -1,18 +1,24 @@
 <script setup>
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useTodoStore } from '@/stores/todo';
 import {useRouter} from 'vue-router';
 
 const router = useRouter();
-const store = useTodoStore();
+const stored = useTodoStore();
 onMounted (() => {
     console.log(store);
 })
-defineProps({
-    
+const props = defineProps({
+    listType :{type: String, default: 'all'}
+})
+const store = computed (() => {
+    if(props.listType === 'completed'){
+        return stored.completedTodos;
+    }
+    return stored.todos;
 })
 function completed(id){
-  const completedTOdo = store.todos.find(item => item.id === Number(id));
+  const completedTOdo = stored.todos.find(item => item.id === Number(id));
   if(!completedTOdo){
     alert('todo not found');
     return
@@ -21,11 +27,11 @@ function completed(id){
     ...completedTOdo,
     isCompleted: true
   };
-  store.updateTodo(updateTodo);
+  stored.updateTodo(updateTodo);
   console.log(updateTodo.isCompleted)
 }
 function deleteTodo (id){
-  store.todos = store.todos.filter(t => t.id !== id);
+  stored.todos = stored.todos.filter(t => t.id !== id);
 }
 function edit(id){
   router.push(`/edit/${id}`);
@@ -35,7 +41,7 @@ function edit(id){
 
 <template>
     <div :class="$attrs.class" > 
-    <div v-for="(value,index) in store.todos" :key="index" class="flex flex-col mt-5 items-center flex-1">
+    <div v-for="(value,index) in store" :key="index" class="flex flex-col mt-5 items-center flex-1">
     <div class=" h-16 w-11/12 bg-white rounded-[10px] flex justify-between">
             <div class="flex flex-col">
                 <h3 class="ml-4 mt-1 text-[#9395d3]">{{ value.title}}</h3>

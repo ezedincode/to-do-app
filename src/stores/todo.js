@@ -3,6 +3,11 @@ import { defineStore } from 'pinia'
 
 export const useTodoStore = defineStore('todo', {
   state: () => ({ todos: [] }),
+  getters:{
+    completedTodos: (state) => {
+      return state.todos.filter(todo => todo.isCompleted === true)
+    },
+  },
   actions: {
     addTodo(todo) {
       this.todos.push(todo)
