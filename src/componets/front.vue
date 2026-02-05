@@ -10,22 +10,7 @@ const type = 'all';
 function sendtodo (){
   router.push('/AddTodo');
 }
- onMounted(() => {
-  const stored = localStorage.getItem('todo');
-  console.log(stored + 'as');
-  if(stored){
-    store.todos = JSON.parse(stored);
-  }
- }
-)
-watch(
-  () => store.todos,
-  (todos) => {
-    console.log('WATCH FIRED:', todos);
-    localStorage.setItem('todos', JSON.stringify(todos));
-  },
-  { deep: true }
-);
+
 function complete () {
   router.push('/complete')
 }
@@ -45,11 +30,11 @@ function complete () {
   <footer class="h-[50px] w-1vw bg-white ">
     <div class="flex  items-end justify-around mr-3">
       <div class="">
-        <img class="w-5 h-5" src="\src\resource\menu.png" alt="">
+        <img class="w-5 cursor-pointer h-5" src="\src\resource\menu.png" alt="">
         <p  class="text-[15px] text-[#8f8b8b]">All</p>
       </div>
     <div class="flex flex-col items-end">
-      <img @click="complete" class="w-5 h-5 mr-5 mt-1" src="\src\resource\check-mark.png" alt="">
+      <img @click="complete" class="w-5 cursor-pointer h-5 mr-5 mt-1" src="\src\resource\check-mark.png" alt="">
       <p class="text-[15px] text-[#8f8b8b]">complete</p>
     </div>
     </div>

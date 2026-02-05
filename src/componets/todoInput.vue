@@ -26,7 +26,8 @@ function add(){
   console.log('Store methods:', Object.keys(store));
   console.log('addTodo type:', typeof store.addTodo);
     store.todos.push(newTodo);
-  
+  title.value = "";
+  detail.value = "";
   toast.success('Task Added Successfully!')
 };
 function route (){
