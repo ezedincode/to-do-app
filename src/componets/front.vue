@@ -2,19 +2,14 @@
 import { useRouter } from 'vue-router';
 import { ref,onMounted, watch, onBeforeMount, onBeforeUnmount} from 'vue';
 import { useTodoStore } from '@/stores/todo';
+import TaskList from './TaskList.vue';
 const emit = defineEmits(['addTodo'])
 const router = useRouter();
 const store = useTodoStore();
 function sendtodo (){
   router.push('/AddTodo');
 }
-function deleteTodo (id){
-  store.todos = store.todos.filter(t => t.id !== id);
-}
-function edit(id){
-  router.push(`/edit/${id}`);
-  console.log("pushed")
-}
+
  onMounted(() => {
   const stored = localStorage.getItem('todo');
   console.log(stored + 'as');
@@ -32,19 +27,7 @@ watch(
   { deep: true }
 );
 
-function completed(id){
-  const completedTOdo = store.todos.find(item => item.id === Number(id));
-  if(!completedTOdo){
-    alert('todo not found');
-    return
-  }
-  const updateTodo = {
-    ...completedTOdo,
-    isCompleted: true
-  };
-  store.updateTodo(updateTodo);
-  console.log(updateTodo.isCompleted)
-}
+
 function complete () {
   router.push('/complete')
 }
@@ -56,11 +39,14 @@ function complete () {
     <h1 class="font-serif text-white text-[25px] ml-2">TODO APP</h1>
     <img class="w-10 h-10  mr-2" src="/src/resource/calendar.png" >
   </div>
-<div class="h-4/5 flex-1 overflow-y-auto">
+  <TaskList class="h-4/5 flex-1 overflow-y-auto"
+  :store="store" ></TaskList>
+<!-- <div class="h-4/5 flex-1 overflow-y-auto"> -->
   
-  <div v-for="(value,index) in store.todos" :key="index" class="flex flex-col mt-5 items-center flex-1">
+  <!-- <div v-for="(value,index) in store.todos" :key="index" class="flex flex-col mt-5 items-center flex-1">
+     -->
     
-    <div class="h-16 w-11/12 bg-white rounded-[10px] flex justify-between">
+    <!-- <div class="h-16 w-11/12 bg-white rounded-[10px] flex justify-between">
             <div class="flex flex-col">
                 <h3 class="ml-4 mt-1 text-[#9395d3]">{{ value.title}}</h3>
                 <p class="ml-4">{{ value.detail }}</p>
@@ -73,9 +59,9 @@ function complete () {
                 <div v-else="value.isCompleted" class="w-2 bg-red-600 h-full rounded-r-[20px]"></div>
             </div>
             
-        </div>
-  </div>
-  </div>
+        </div> -->
+  <!-- </div> -->
+  <!-- </div> -->
     <button class="absolute opacity-50 rounded-full w-20 h-20 bg-[#9395d3] left-3/4 top-3/4"
     @click=" sendtodo">
 </button>
